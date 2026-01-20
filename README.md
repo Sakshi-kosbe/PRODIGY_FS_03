@@ -58,7 +58,7 @@ A modern **Real-Time Chat Web Application** that enables users to communicate in
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/real-time-chat-app.git
+git clone https://github.com/Sakshi-kosbe/PRODIGY_FS_04.git
 cd real-time-chat-app
 ```
 
