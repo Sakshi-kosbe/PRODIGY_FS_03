@@ -1,123 +1,70 @@
-# Real-Time Chat Application 💬
+# 🛒 Local Store E-commerce Platform
 
-A modern **Real-Time Chat Web Application** that enables users to communicate instantly using **WebSocket technology**. The application supports private messaging, group chat rooms, and real-time updates with a clean and responsive user interface.
+A modern and responsive **Local Store E-commerce Platform** developed as **Task 3** during my internship at **Prodigy Infotech**. This project enables local businesses to showcase their products online and allows customers to browse and shop seamlessly.
 
 ---
 
-## 🚀 Features
+## 📌 Project Overview
 
-### Core Features
+The Local Store E-commerce Platform is designed to bridge the gap between local retailers and online customers. It provides a smooth shopping experience with intuitive navigation, visually appealing product listings, and a functional shopping cart.
 
-* User Authentication (Sign Up / Login / Logout)
-* Secure user sessions and protected routes
-* Real-time messaging using WebSockets
-* One-to-one private chats
-* Group chat rooms (create, join, leave)
-* Message timestamps
-* Responsive and intuitive UI
+---
 
-### Optional / Advanced Features
+## ✨ Features
 
-* Chat history persistence
-* User online/offline presence indicators
-* Real-time notifications
-* Typing indicators
-* Multimedia sharing (images, files, emojis)
-* Search functionality within chats
+* 🖼️ Product listings with images, prices, and descriptions
+* 🛍️ Shopping cart functionality with quantity management
+* 📱 Fully responsive design (mobile-first approach)
+* 🔍 Easy navigation for better user experience
+
+### 🔹 Optional / Advanced Features
+
+* Order tracking system
+* Customer reviews and ratings
+* Product sorting and filtering options
+* Customer support contact section
+
+---
+
+## 🌐 Live Demo
+
+🚀 The project is deployed and available as a **live demo**, showcasing real-time functionality and usability.
+👉 **Live Demo Link:** *https://prodigy-fs-04-nine.vercel.app/*
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend**
-
-* React.js
-* HTML5, CSS3
-* Responsive Design
-
-**Backend**
-
-* Node.js
-* WebSocket / Socket.IO
-* REST APIs
-
-**Database**
-
-* MongoDB / PostgreSQL
-
-**Authentication**
-
-* JWT-based authentication
-* Secure password hashing
+* **Frontend:** HTML, CSS, JavaScript / React
+* **Backend:** Firebase / Supabase / Mock API
+* **Database:** Product & order data storage
+* **Deployment:** Vercel / Netlify
 
 ---
 
+## 🎯 Learning Outcomes
 
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the repository
-
-```bash
-git clone https://github.com/Sakshi-kosbe/PRODIGY_FS_04.git
-cd real-time-chat-app
-```
-
-### 2️⃣ Install dependencies
-
-```bash
-npm install
-cd client
-npm install
-```
-
-### 3️⃣ Configure environment variables
-
-Create a `.env` file in the root directory:
-
-```env
-PORT=5000
-DATABASE_URL=your_database_url
-JWT_SECRET=your_secret_key
-```
-
-### 4️⃣ Run the application
-
-```bash
-npm run dev
-```
+* Hands-on experience with real-world e-commerce workflows
+* Improved understanding of responsive UI design
+* Strengthened skills in web development and project structuring
+* Practical exposure to deploying live web applications
 
 ---
 
-## 🔐 Security
+## 📚 Internship Details
 
-* Password hashing for secure authentication
-* JWT-based authorization
-* Protected API routes
-* Secure WebSocket connections
-
----
-
-## 🌐 Future Enhancements
-
-* End-to-end encryption
-* Voice and video calling
-* Message reactions
-* Dark mode support
-* Push notifications
+* **Internship Program:** Web Development Internship
+* **Organization:** Prodigy Infotech
+* **Task:** Task 3 – E-commerce Website Development
 
 ---
 
-## 🤝 Contributing
+## 📬 Contact
 
-Contributions are welcome!
-Feel free to fork the repository and submit a pull request.
+If you have any feedback or suggestions, feel free to connect with me on **LinkedIn** or explore the project further.
 
----
-
-## ⭐ Acknowledgements
-
-Built to demonstrate real-time communication using modern web technologies.
+⭐ Don’t forget to star the repository if you found it helpful!
 
 ---
 
-**Made with ❤️ for learning and real-time collaboration**
+**Built with dedication and continuous learning 🚀**
