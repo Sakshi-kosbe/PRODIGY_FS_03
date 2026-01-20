@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Market - Your Neighborhood Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 25px;
+            padding: 8px 15px;
+            width: 250px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            padding: 5px 10px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .cart-icon, .user-icon {
+            position: relative;
+            font-size: 22px;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #1a252f;
+        }
+        
+        /* Featured Products */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            font-size: 32px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-category {
+            color: #3498db;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .close-modal {
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .cart-item-details h4 {
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        /* Product Detail */
+        .product-detail {
+            display: none;
+            padding: 50px 0;
+        }
+        
+        .product-detail.active {
+            display: block;
+        }
+        
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .availability {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .in-stock {
+            background-color: #d5f4e6;
+            color: #27ae60;
+        }
+        
+        .out-of-stock {
+            background-color: #fadbd8;
+            color: #e74c3c;
+        }
+        
+        /* Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            padding: 8px 20px;
+            background-color: #f5f5f5;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .category-btn.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 14px;
+        }
+        
+        /* Login Modal */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .auth-toggle {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+        }
+        
+        .auth-toggle span {
+            color: #3498db;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .product-detail-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .cart-item-info {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 50px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Main App Component
+        function App() {
+            const [currentView, setCurrentView] = React.useState('home');
+            const [cart, setCart] = React.useState([]);
+            const [selectedProduct, setSelectedProduct] = React.useState(null);
+            const [isCartOpen, setIsCartOpen] = React.useState(false);
+            const [isAuthOpen, setIsAuthOpen] = React.useState(false);
+            const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+            const [user, setUser] = React.useState(null);
+            const [activeCategory, setActiveCategory] = React.useState('all');
+            const [searchQuery, setSearchQuery] = React.useState('');
+            
+            // Sample product data
+            const products = [
+                {
+                    id: 1,
+                    name: "Organic Apples",
+                    price: 3.99,
+                    category: "produce",
+                    description: "Fresh organic apples from local farms",
+                    longDescription: "Crisp, sweet organic apples harvested at peak ripeness. Perfect for snacking, baking, or making cider. Grown sustainably without pesticides.",
+                    image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: true,
+                    inStock: true,
+                    rating: 4.5,
+                    reviews: 24
+                },
+                {
+                    id: 2,
+                    name: "Artisan Bread",
+                    price: 4.50,
+                    category: "bakery",
+                    description: "Freshly baked sourdough bread",
+                    longDescription: "Our signature sourdough bread made with traditional methods. Crispy crust with a soft, airy interior. Baked fresh daily.",
+                    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: true,
+                    inStock: true,
+                    rating: 4.8,
+                    reviews: 36
+                },
+                {
+                    id: 3,
+                    name: "Free-Range Eggs",
+                    price: 5.99,
+                    category: "dairy",
+                    description: "Dozen free-range chicken eggs",
+                    longDescription: "Farm-fresh eggs from free-range chickens raised on local pastures. Rich in flavor and nutrients with bright orange yolks.",
+                    image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: true,
+                    inStock: true,
+                    rating: 4.7,
+                    reviews: 41
+                },
+                {
+                    id: 4,
+                    name: "Local Honey",
+                    price: 8.99,
+                    category: "pantry",
+                    description: "Raw honey from neighborhood bees",
+                    longDescription: "Pure, raw honey harvested from local bee colonies. Unprocessed and unfiltered to preserve natural enzymes and health benefits.",
+                    image: "https://images.unsplash.com/photo-1587049352851-8d4e89133924?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: false,
+                    inStock: true,
+                    rating: 4.9,
+                    reviews: 52
+                },
+                {
+                    id: 5,
+                    name: "Fresh Milk",
+                    price: 4.25,
+                    category: "dairy",
+                    description: "Fresh whole milk from local dairy",
+                    longDescription: "Creamy whole milk from grass-fed cows at our partner dairy farm. Delivered fresh daily, never homogenized.",
+                    image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: false,
+                    inStock: true,
+                    rating: 4.6,
+                    reviews: 28
+                },
+                {
+                    id: 6,
+                    name: "Seasonal Vegetables",
+                    price: 12.99,
+                    category: "produce",
+                    description: "Assorted seasonal vegetable basket",
+                    longDescription: "A curated selection of seasonal vegetables from local farms. Changes weekly based on what's freshest and in season.",
+                    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: true,
+                    inStock: true,
+                    rating: 4.4,
+                    reviews: 19
+                },
+                {
+                    id: 7,
+                    name: "Homemade Jam",
+                    price: 6.50,
+                    category: "pantry",
+                    description: "Strawberry jam made in-store",
+                    longDescription: "Small-batch strawberry jam made with local berries and minimal sugar. Perfect on toast, yogurt, or as a dessert topping.",
+                    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: false,
+                    inStock: false,
+                    rating: 4.8,
+                    reviews: 47
+                },
+                {
+                    id: 8,
+                    name: "Fresh Coffee Beans",
+                    price: 14.99,
+                    category: "pantry",
+                    description: "Locally roasted coffee beans",
+                    longDescription: "Premium Arabica beans roasted in small batches at our local roastery. Rich flavor with notes of chocolate and caramel.",
+                    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    featured: false,
+                    inStock: true,
+                    rating: 4.9,
+                    reviews: 63
+                }
+            ];
+            
+            // Calculate cart total
+            const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            
+            // Filter products based on category and search
+            const filteredProducts = products.filter(product => {
+                const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     product.description.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+            
+            // Featured products
+            const featuredProducts = products.filter(product => product.featured);
+            
+            // Handle adding to cart
+            const addToCart = (product) => {
+                const existingItem = cart.find(item => item.id === product.id);
+                
+                if (existingItem) {
+                    setCart(cart.map(item => 
+                        item.id === product.id 
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    ));
+                } else {
+                    setCart([...cart, { ...product, quantity: 1 }]);
+                }
+                
+                // Show cart notification
+                setIsCartOpen(true);
+            };
+            
+            // Handle removing from cart
+            const removeFromCart = (productId) => {
+                setCart(cart.filter(item => item.id !== productId));
+            };
+            
+            // Handle quantity change
+            const updateQuantity = (productId, newQuantity) => {
+                if (newQuantity < 1) {
+                    removeFromCart(productId);
+                    return;
+                }
+                
+                setCart(cart.map(item => 
+                    item.id === productId 
+                        ? { ...item, quantity: newQuantity }
+                        : item
+                ));
+            };
+            
+            // Handle product selection
+            const handleProductClick = (product) => {
+                setSelectedProduct(product);
+                setCurrentView('product-detail');
+                window.scrollTo(0, 0);
+            };
+            
+            // Handle checkout
+            const handleCheckout = () => {
+                if (cart.length === 0) return;
+                
+                if (!isLoggedIn) {
+                    setIsAuthOpen(true);
+                    return;
+                }
+                
+                alert(`Order placed successfully! Total: $${cartTotal.toFixed(2)}`);
+                setCart([]);
+                setIsCartOpen(false);
+            };
+            
+            // Handle authentication
+            const handleLogin = (e) => {
+                e.preventDefault();
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+                
+                // Mock authentication
+                if (email && password) {
+                    setIsLoggedIn(true);
+                    setUser({ name: "Local Customer", email });
+                    setIsAuthOpen(false);
+                    alert("Login successful!");
+                }
+            };
+            
+            const handleSignup = (e) => {
+                e.preventDefault();
+                const name = e.target.name.value;
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+                
+                // Mock registration
+                if (name && email && password) {
+                    setIsLoggedIn(true);
+                    setUser({ name, email });
+                    setIsAuthOpen(false);
+                    alert("Account created successfully!");
+                }
+            };
+            
+            return (
+                <div>
+                    {/* Header */}
+                    <Header 
+                        setCurrentView={setCurrentView}
+                        setIsCartOpen={setIsCartOpen}
+                        setIsAuthOpen={setIsAuthOpen}
+                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        cartCount={cart.reduce((count, item) => count + item.quantity, 0)}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                    />
+                    
+                    {/* Main Content */}
+                    <main>
+                        {currentView === 'home' && (
+                            <HomePage 
+                                featuredProducts={featuredProducts}
+                                handleProductClick={handleProductClick}
+                                addToCart={addToCart}
+                                setCurrentView={setCurrentView}
+                            />
+                        )}
+                        
+                        {currentView === 'products' && (
+                            <ProductsPage 
+                                products={filteredProducts}
+                                activeCategory={activeCategory}
+                                setActiveCategory={setActiveCategory}
+                                handleProductClick={handleProductClick}
+                                addToCart={addToCart}
+                            />
+                        )}
+                        
+                        {currentView === 'product-detail' && selectedProduct && (
+                            <ProductDetailPage 
+                                product={selectedProduct}
+                                addToCart={addToCart}
+                                setCurrentView={setCurrentView}
+                            />
+                        )}
+                        
+                        {currentView === 'cart' && (
+                            <CartPage 
+                                cart={cart}
+                                updateQuantity={updateQuantity}
+                                removeFromCart={removeFromCart}
+                                cartTotal={cartTotal}
+                                handleCheckout={handleCheckout}
+                                isLoggedIn={isLoggedIn}
+                                setIsAuthOpen={setIsAuthOpen}
+                            />
+                        )}
+                        
+                        {currentView === 'support' && <SupportPage />}
+                        
+                        {currentView === 'tracking' && <OrderTrackingPage isLoggedIn={isLoggedIn} />}
+                    </main>
+                    
+                    {/* Footer */}
+                    <Footer setCurrentView={setCurrentView} />
+                    
+                    {/* Cart Modal */}
+                    <CartModal 
+                        cart={cart}
+                        isCartOpen={isCartOpen}
+                        setIsCartOpen={setIsCartOpen}
+                        updateQuantity={updateQuantity}
+                        removeFromCart={removeFromCart}
+                        cartTotal={cartTotal}
+                        handleCheckout={handleCheckout}
+                        setCurrentView={setCurrentView}
+                    />
+                    
+                    {/* Auth Modal */}
+                    <AuthModal 
+                        isAuthOpen={isAuthOpen}
+                        setIsAuthOpen={setIsAuthOpen}
+                        handleLogin={handleLogin}
+                        handleSignup={handleSignup}
+                    />
+                </div>
+            );
+        }
+        
+        // Header Component
+        function Header({ setCurrentView, setIsCartOpen, setIsAuthOpen, isLoggedIn, user, cartCount, searchQuery, setSearchQuery }) {
+            return (
+                <header>
+                    <div className="container">
+                        <div className="header-content">
+                            <a href="#" className="logo" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>
+                                <i className="fas fa-store"></i>
+                                <span>Local Market</span>
+                            </a>
+                            
+                            <nav className="nav-links">
+                                <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>Home</a>
+                                <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('products'); }}>Products</a>
+                                <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('tracking'); }}>Track Order</a>
+                                <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('support'); }}>Support</a>
+                            </nav>
+                            
+                            <div className="header-actions">
+                                <div className="search-bar">
+                                    <i className="fas fa-search"></i>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search products..." 
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                </div>
+                                
+                                <div className="user-icon" onClick={() => setIsAuthOpen(true)}>
+                                    <i className="fas fa-user"></i>
+                                    {isLoggedIn && <span className="user-badge"></span>}
+                                </div>
+                                
+                                <div className="cart-icon" onClick={() => setIsCartOpen(true)}>
+                                    <i className="fas fa-shopping-cart"></i>
+                                    {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            );
+        }
+        
+        // Home Page Component
+        function HomePage({ featuredProducts, handleProductClick, addToCart, setCurrentView }) {
+            return (
+                <div>
+                    {/* Hero Section */}
+                    <section className="hero">
+                        <div className="container">
+                            <h1>Welcome to Your Local Market</h1>
+                            <p>Fresh produce, artisanal goods, and everyday essentials from local farmers and makers. Supporting our community since 2010.</p>
+                            <button className="btn" onClick={() => setCurrentView('products')}>Shop Now</button>
+                        </div>
+                    </section>
+                    
+                    {/* Featured Products */}
+                    <section className="container">
+                        <h2 className="section-title">Featured Products</h2>
+                        <div className="products-grid">
+                            {featuredProducts.map(product => (
+                                <ProductCard 
+                                    key={product.id}
+                                    product={product}
+                                    handleProductClick={handleProductClick}
+                                    addToCart={addToCart}
+                                />
+                            ))}
+                        </div>
+                        
+                        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+                            <button className="btn btn-secondary" onClick={() => setCurrentView('products')}>
+                                View All Products
+                            </button>
+                        </div>
+                        
+                        {/* Store Highlights */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px', marginBottom: '60px' }}>
+                            <div style={{ textAlign: 'center', padding: '30px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+                                <i className="fas fa-leaf" style={{ fontSize: '40px', color: '#27ae60', marginBottom: '15px' }}></i>
+                                <h3>Locally Sourced</h3>
+                                <p>All products come from within 50 miles of our store</p>
+                            </div>
+                            
+                            <div style={{ textAlign: 'center', padding: '30px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+                                <i className="fas fa-shipping-fast" style={{ fontSize: '40px', color: '#3498db', marginBottom: '15px' }}></i>
+                                <h3>Fast Delivery</h3>
+                                <p>Same-day delivery for orders placed before 2pm</p>
+                            </div>
+                            
+                            <div style={{ textAlign: 'center', padding: '30px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+                                <i className="fas fa-hand-holding-usd" style={{ fontSize: '40px', color: '#e74c3c', marginBottom: '15px' }}></i>
+                                <h3>Best Prices</h3>
+                                <p>Quality products at competitive local prices</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            );
+        }
+        
+        // Products Page Component
+        function ProductsPage({ products, activeCategory, setActiveCategory, handleProductClick, addToCart }) {
+            const categories = [
+                { id: 'all', name: 'All Products' },
+                { id: 'produce', name: 'Produce' },
+                { id: 'bakery', name: 'Bakery' },
+                { id: 'dairy', name: 'Dairy' },
+                { id: 'pantry', name: 'Pantry' }
+            ];
+            
+            return (
+                <section className="container" style={{ padding: '50px 0' }}>
+                    <h2 className="section-title">Our Products</h2>
+                    
+                    {/* Category Filter */}
+                    <div className="categories">
+                        {categories.map(category => (
+                            <button 
+                                key={category.id}
+                                className={`category-btn ${activeCategory === category.id ? 'active' : ''}`}
+                                onClick={() => setActiveCategory(category.id)}
+                            >
+                                {category.name}
+                            </button>
+                        ))}
+                    </div>
+                    
+                    {/* Products Grid */}
+                    {products.length > 0 ? (
+                        <div className="products-grid">
+                            {products.map(product => (
+                                <ProductCard 
+                                    key={product.id}
+                                    product={product}
+                                    handleProductClick={handleProductClick}
+                                    addToCart={addToCart}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '50px' }}>
+                            <i className="fas fa-search" style={{ fontSize: '60px', color: '#bdc3c7', marginBottom: '20px' }}></i>
+                            <h3>No products found</h3>
+                            <p>Try adjusting your search or filter criteria</p>
+                        </div>
+                    )}
+                </section>
+            );
+        }
+        
+        // Product Card Component
+        function ProductCard({ product, handleProductClick, addToCart }) {
+            return (
+                <div className="product-card">
+                    <img src={product.image} alt={product.name} className="product-image" />
+                    <div className="product-info">
+                        <div className="product-category">{product.category}</div>
+                        <h3 className="product-name">{product.name}</h3>
+                        <p className="product-description">{product.description}</p>
+                        <div className="product-price">${product.price.toFixed(2)}</div>
+                        
+                        <div className="product-actions">
+                            <button className="btn" onClick={() => handleProductClick(product)}>
+                                View Details
+                            </button>
+                            <button 
+                                className="btn btn-secondary" 
+                                onClick={() => addToCart(product)}
+                                disabled={!product.inStock}
+                            >
+                                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        // Product Detail Page Component
+        function ProductDetailPage({ product, addToCart, setCurrentView }) {
+            return (
+                <section className="product-detail active">
+                    <div className="container">
+                        <button 
+                            className="btn btn-secondary" 
+                            onClick={() => setCurrentView('products')}
+                            style={{ marginBottom: '20px' }}
+                        >
+                            <i className="fas fa-arrow-left"></i> Back to Products
+                        </button>
+                        
+                        <div className="product-detail-content">
+                            <div>
+                                <img src={product.image} alt={product.name} className="product-detail-image" />
+                            </div>
+                            
+                            <div>
+                                <div className="product-category">{product.category}</div>
+                                <h1 style={{ fontSize: '36px', marginBottom: '15px' }}>{product.name}</h1>
+                                
+                                <div className="availability" className={`availability ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
+                                    {product.inStock ? 'In Stock' : 'Out of Stock'}
+                                </div>
+                                
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                                    <div style={{ color: '#f39c12' }}>
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <i 
+                                                key={i} 
+                                                className={`fas fa-star${i < Math.floor(product.rating) ? '' : '-half-alt'}`}
+                                            ></i>
+                                        ))}
+                                    </div>
+                                    <span>{product.rating} ({product.reviews} reviews)</span>
+                                </div>
+                                
+                                <p style={{ fontSize: '18px', marginBottom: '25px' }}>{product.longDescription}</p>
+                                
+                                <div className="product-price" style={{ fontSize: '32px', marginBottom: '30px' }}>
+                                    ${product.price.toFixed(2)}
+                                </div>
+                                
+                                <button 
+                                    className="btn" 
+                                    style={{ padding: '15px 30px', fontSize: '18px' }}
+                                    onClick={() => addToCart(product)}
+                                    disabled={!product.inStock}
+                                >
+                                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                                </button>
+                                
+                                {/* Reviews Section */}
+                                <div style={{ marginTop: '40px' }}>
+                                    <h3>Customer Reviews</h3>
+                                    <div style={{ marginTop: '15px', backgroundColor: '#f9f9f9', padding: '15px', borderRadius: '5px' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                            <strong>Alex Johnson</strong>
+                                            <span style={{ color: '#f39c12' }}>
+                                                <i className="fas fa-star"></i>
+                                                <i className="fas fa-star"></i>
+                                                <i className="fas fa-star"></i>
+                                                <i className="fas fa-star"></i>
+                                                <i className="fas fa-star"></i>
+                                            </span>
+                                        </div>
+                                        <p>"Absolutely love this product! The quality is exceptional and it's definitely worth the price."</p>
+                                        <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>2 days ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        // Cart Page Component
+        function CartPage({ cart, updateQuantity, removeFromCart, cartTotal, handleCheckout, isLoggedIn, setIsAuthOpen }) {
+            return (
+                <section className="container" style={{ padding: '50px 0' }}>
+                    <h2 className="section-title">Your Shopping Cart</h2>
+                    
+                    {cart.length > 0 ? (
+                        <div>
+                            <div style={{ marginBottom: '30px' }}>
+                                {cart.map(item => (
+                                    <div key={item.id} className="cart-item">
+                                        <div className="cart-item-info">
+                                            <img src={item.image} alt={item.name} className="cart-item-image" />
+                                            <div className="cart-item-details">
+                                                <h4>{item.name}</h4>
+                                                <div className="cart-item-price">${item.price.toFixed(2)}</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="cart-item-actions">
+                                            <button className="quantity-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                                            <span style={{ fontWeight: 'bold', minWidth: '30px', textAlign: 'center' }}>{item.quantity}</span>
+                                            <button className="quantity-btn" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                                            <button 
+                                                className="btn btn-secondary" 
+                                                style={{ padding: '5px 10px', fontSize: '14px' }}
+                                                onClick={() => removeFromCart(item.id)}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div className="cart-total">
+                                <span>Total:</span>
+                                <span>${cartTotal.toFixed(2)}</span>
+                            </div>
+                            
+                            <div style={{ textAlign: 'right', marginTop: '30px' }}>
+                                <button 
+                                    className="btn" 
+                                    style={{ padding: '15px 40px', fontSize: '18px' }}
+                                    onClick={isLoggedIn ? handleCheckout : () => setIsAuthOpen(true)}
+                                >
+                                    {isLoggedIn ? 'Proceed to Checkout' : 'Login to Checkout'}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '50px' }}>
+                            <i className="fas fa-shopping-cart" style={{ fontSize: '60px', color: '#bdc3c7', marginBottom: '20px' }}></i>
+                            <h3>Your cart is empty</h3>
+                            <p>Add some products to your cart to continue shopping</p>
+                        </div>
+                    )}
+                </section>
+            );
+        }
+        
+        // Cart Modal Component
+        function CartModal({ cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, cartTotal, handleCheckout, setCurrentView }) {
+            return (
+                <div className={`modal ${isCartOpen ? 'active' : ''}`}>
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h2>Your Cart</h2>
+                            <div className="close-modal" onClick={() => setIsCartOpen(false)}>&times;</div>
+                        </div>
+                        
+                        {cart.length > 0 ? (
+                            <div>
+                                <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                                    {cart.map(item => (
+                                        <div key={item.id} className="cart-item">
+                                            <div className="cart-item-info">
+                                                <img src={item.image} alt={item.name} className="cart-item-image" />
+                                                <div className="cart-item-details">
+                                                    <h4>{item.name}</h4>
+                                                    <div className="cart-item-price">${item.price.toFixed(2)}</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="cart-item-actions">
+                                                <button className="quantity-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                                                <span style={{ fontWeight: 'bold', minWidth: '30px', textAlign: 'center' }}>{item.quantity}</span>
+                                                <button className="quantity-btn" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                <div className="cart-total">
+                                    <span>Total:</span>
+                                    <span>${cartTotal.toFixed(2)}</span>
+                                </div>
+                                
+                                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                                    <button 
+                                        className="btn" 
+                                        style={{ flex: 1 }}
+                                        onClick={() => {
+                                            setIsCartOpen(false);
+                                            setCurrentView('cart');
+                                        }}
+                                    >
+                                        View Full Cart
+                                    </button>
+                                    <button 
+                                        className="btn btn-secondary" 
+                                        style={{ flex: 1 }}
+                                        onClick={handleCheckout}
+                                    >
+                                        Checkout
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ textAlign: 'center', padding: '30px' }}>
+                                <i className="fas fa-shopping-cart" style={{ fontSize: '50px', color: '#bdc3c7', marginBottom: '15px' }}></i>
+                                <h3>Your cart is empty</h3>
+                                <p>Add some products to your cart to continue shopping</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        // Support Page Component
+        function SupportPage() {
+            const [formData, setFormData] = React.useState({
+                name: '',
+                email: '',
+                subject: '',
+                message: ''
+            });
+            
+            const handleChange = (e) => {
+                setFormData({
+                    ...formData,
+                    [e.target.name]: e.target.value
+                });
+            };
+            
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you within 24 hours.');
+                setFormData({ name: '', email: '', subject: '', message: '' });
+            };
+            
+            return (
+                <section className="container" style={{ padding: '50px 0' }}>
+                    <h2 className="section-title">Customer Support</h2>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', marginTop: '40px' }}>
+                        <div>
+                            <h3 style={{ marginBottom: '20px' }}>Contact Us</h3>
+                            <p style={{ marginBottom: '30px' }}>We're here to help! Reach out to us with any questions or concerns about your order or our products.</p>
+                            
+                            <div style={{ marginBottom: '20px' }}>
+                                <h4><i className="fas fa-map-marker-alt" style={{ marginRight: '10px', color: '#3498db' }}></i> Our Location</h4>
+                                <p>123 Main Street, Local Town, LT 12345</p>
+                            </div>
+                            
+                            <div style={{ marginBottom: '20px' }}>
+                                <h4><i className="fas fa-phone" style={{ marginRight: '10px', color: '#3498db' }}></i> Phone</h4>
+                                <p>(123) 456-7890</p>
+                            </div>
+                            
+                            <div style={{ marginBottom: '20px' }}>
+                                <h4><i className="fas fa-envelope" style={{ marginRight: '10px', color: '#3498db' }}></i> Email</h4>
+                                <p>support@localmarket.com</p>
+                            </div>
+                            
+                            <div style={{ marginBottom: '20px' }}>
+                                <h4><i className="fas fa-clock" style={{ marginRight: '10px', color: '#3498db' }}></i> Store Hours</h4>
+                                <p>Mon-Fri: 8am-8pm</p>
+                                <p>Sat-Sun: 9am-6pm</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 style={{ marginBottom: '20px' }}>Send Us a Message</h3>
+                            <form className="auth-form" onSubmit={handleSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="name">Full Name</label>
+                                    <input 
+                                        type="text" 
+                                        id="name" 
+                                        name="name" 
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required 
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="email">Email Address</label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required 
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="subject">Subject</label>
+                                    <input 
+                                        type="text" 
+                                        id="subject" 
+                                        name="subject" 
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        required 
+                                    />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="message">Message</label>
+                                    <textarea 
+                                        id="message" 
+                                        name="message" 
+                                        rows="5"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        style={{ padding: '12px 15px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '16px', fontFamily: 'inherit' }}
+                                        required
+                                    ></textarea>
+                                </div>
+                                
+                                <button type="submit" className="btn">Send Message</button>
+                            </form>
+                            
+                            {/* Live Chat Placeholder */}
+                            <div style={{ marginTop: '40px', backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '10px' }}>
+                                <h4><i className="fas fa-comments" style={{ marginRight: '10px', color: '#3498db' }}></i> Live Chat</h4>
+                                <p style={{ marginBottom: '15px' }}>Chat with our support team in real-time</p>
+                                <button className="btn" style={{ padding: '10px 20px' }}>
+                                    Start Live Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        // Order Tracking Page Component
+        function OrderTrackingPage({ isLoggedIn }) {
+            const [orderId, setOrderId] = React.useState('');
+            const [orderStatus, setOrderStatus] = React.useState(null);
+            
+            const mockOrders = [
+                { id: 'ORD-2023-001', status: 'delivered', date: '2023-10-15', total: 45.99 },
+                { id: 'ORD-2023-002', status: 'shipped', date: '2023-10-18', total: 28.50 },
+                { id: 'ORD-2023-003', status: 'placed', date: '2023-10-20', total: 62.75 }
+            ];
+            
+            const handleTrackOrder = (e) => {
+                e.preventDefault();
+                if (!orderId.trim()) return;
+                
+                // Mock order lookup
+                const foundOrder = mockOrders.find(order => order.id === orderId);
+                if (foundOrder) {
+                    setOrderStatus(foundOrder);
+                } else {
+                    alert('Order not found. Please check your order ID and try again.');
+                }
+            };
+            
+            const getStatusColor = (status) => {
+                switch(status) {
+                    case 'placed': return '#3498db';
+                    case 'shipped': return '#f39c12';
+                    case 'delivered': return '#27ae60';
+                    default: return '#95a5a6';
+                }
+            };
+            
+            const getStatusText = (status) => {
+                switch(status) {
+                    case 'placed': return 'Order Placed';
+                    case 'shipped': return 'Shipped';
+                    case 'delivered': return 'Delivered';
+                    default: return 'Unknown';
+                }
+            };
+            
+            return (
+                <section className="container" style={{ padding: '50px 0' }}>
+                    <h2 className="section-title">Track Your Order</h2>
+                    
+                    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+                        <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '10px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+                            <h3 style={{ marginBottom: '20px' }}>Enter Your Order ID</h3>
+                            <p style={{ marginBottom: '25px' }}>You can find your order ID in your order confirmation email.</p>
+                            
+                            <form onSubmit={handleTrackOrder} style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
+                                <input 
+                                    type="text" 
+                                    placeholder="e.g., ORD-2023-001"
+                                    value={orderId}
+                                    onChange={(e) => setOrderId(e.target.value)}
+                                    style={{ flex: 1, padding: '12px 15px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '16px' }}
+                                />
+                                <button type="submit" className="btn">Track Order</button>
+                            </form>
+                            
+                            {orderStatus && (
+                                <div style={{ borderTop: '1px solid #eee', paddingTop: '25px' }}>
+                                    <h3 style={{ marginBottom: '20px' }}>Order Status</h3>
+                                    
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
+                                        <span>Order ID:</span>
+                                        <strong>{orderStatus.id}</strong>
+                                    </div>
+                                    
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
+                                        <span>Order Date:</span>
+                                        <strong>{orderStatus.date}</strong>
+                                    </div>
+                                    
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
+                                        <span>Order Total:</span>
+                                        <strong>${orderStatus.total.toFixed(2)}</strong>
+                                    </div>
+                                    
+                                    {/* Status Progress */}
+                                    <div style={{ marginBottom: '30px' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', marginBottom: '10px' }}>
+                                            <div style={{ textAlign: 'center', zIndex: 2 }}>
+                                                <div style={{ 
+                                                    width: '30px', 
+                                                    height: '30px', 
+                                                    borderRadius: '50%', 
+                                                    backgroundColor: orderStatus.status === 'placed' || orderStatus.status === 'shipped' || orderStatus.status === 'delivered' ? getStatusColor('placed') : '#ecf0f1',
+                                                    margin: '0 auto 5px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: 'white',
+                                                    fontSize: '14px'
+                                                }}>
+                                                    1
+                                                </div>
+                                                <div style={{ fontSize: '12px' }}>Placed</div>
+                                            </div>
+                                            
+                                            <div style={{ textAlign: 'center', zIndex: 2 }}>
+                                                <div style={{ 
+                                                    width: '30px', 
+                                                    height: '30px', 
+                                                    borderRadius: '50%', 
+                                                    backgroundColor: orderStatus.status === 'shipped' || orderStatus.status === 'delivered' ? getStatusColor('shipped') : '#ecf0f1',
+                                                    margin: '0 auto 5px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: 'white',
+                                                    fontSize: '14px'
+                                                }}>
+                                                    2
+                                                </div>
+                                                <div style={{ fontSize: '12px' }}>Shipped</div>
+                                            </div>
+                                            
+                                            <div style={{ textAlign: 'center', zIndex: 2 }}>
+                                                <div style={{ 
+                                                    width: '30px', 
+                                                    height: '30px', 
+                                                    borderRadius: '50%', 
+                                                    backgroundColor: orderStatus.status === 'delivered' ? getStatusColor('delivered') : '#ecf0f1',
+                                                    margin: '0 auto 5px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: 'white',
+                                                    fontSize: '14px'
+                                                }}>
+                                                    3
+                                                </div>
+                                                <div style={{ fontSize: '12px' }}>Delivered</div>
+                                            </div>
+                                            
+                                            {/* Progress Line */}
+                                            <div style={{ 
+                                                position: 'absolute', 
+                                                top: '15px', 
+                                                left: '15%', 
+                                                right: '15%', 
+                                                height: '2px', 
+                                                backgroundColor: '#ecf0f1',
+                                                zIndex: 1
+                                            }}></div>
+                                            
+                                            <div style={{ 
+                                                position: 'absolute', 
+                                                top: '15px', 
+                                                left: '15%', 
+                                                width: orderStatus.status === 'placed' ? '0%' : orderStatus.status === 'shipped' ? '50%' : '100%', 
+                                                height: '2px', 
+                                                backgroundColor: orderStatus.status === 'delivered' ? getStatusColor('delivered') : getStatusColor('shipped'),
+                                                zIndex: 1,
+                                                transition: 'width 0.5s'
+                                            }}></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{ 
+                                        backgroundColor: getStatusColor(orderStatus.status) + '20', 
+                                        padding: '15px', 
+                                        borderRadius: '5px',
+                                        textAlign: 'center'
+                                    }}>
+                                        <strong style={{ color: getStatusColor(orderStatus.status) }}>
+                                            Current Status: {getStatusText(orderStatus.status)}
+                                        </strong>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {isLoggedIn && (
+                                <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+                                    <h4 style={{ marginBottom: '15px' }}>Your Recent Orders</h4>
+                                    <div style={{ backgroundColor: '#f9f9f9', borderRadius: '5px', overflow: 'hidden' }}>
+                                        {mockOrders.map(order => (
+                                            <div key={order.id} style={{ 
+                                                display: 'flex', 
+                                                justifyContent: 'space-between', 
+                                                padding: '12px 15px',
+                                                borderBottom: '1px solid #eee',
+                                                cursor: 'pointer'
+                                            }} onClick={() => {
+                                                setOrderId(order.id);
+                                                setOrderStatus(order);
+                                            }}>
+                                                <div>
+                                                    <div style={{ fontWeight: 'bold' }}>{order.id}</div>
+                                                    <div style={{ fontSize: '14px', color: '#666' }}>{order.date}</div>
+                                                </div>
+                                                <div style={{ textAlign: 'right' }}>
+                                                    <div style={{ fontWeight: 'bold' }}>${order.total.toFixed(2)}</div>
+                                                    <div style={{ 
+                                                        fontSize: '12px', 
+                                                        color: 'white', 
+                                                        backgroundColor: getStatusColor(order.status),
+                                                        padding: '2px 8px',
+                                                        borderRadius: '10px',
+                                                        display: 'inline-block'
+                                                    }}>
+                                                        {getStatusText(order.status)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        
+        // Auth Modal Component
+        function AuthModal({ isAuthOpen, setIsAuthOpen, handleLogin, handleSignup }) {
+            const [isLogin, setIsLogin] = React.useState(true);
+            
+            return (
+                <div className={`modal ${isAuthOpen ? 'active' : ''}`}>
+                    <div className="modal-content" style={{ maxWidth: '500px' }}>
+                        <div className="modal-header">
+                            <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
+                            <div className="close-modal" onClick={() => setIsAuthOpen(false)}>&times;</div>
+                        </div>
+                        
+                        {isLogin ? (
+                            <form className="auth-form" onSubmit={handleLogin}>
+                                <div className="form-group">
+                                    <label htmlFor="login-email">Email Address</label>
+                                    <input type="email" id="login-email" name="email" required />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="login-password">Password</label>
+                                    <input type="password" id="login-password" name="password" required />
+                                </div>
+                                
+                                <button type="submit" className="btn">Login</button>
+                                
+                                <div className="auth-toggle">
+                                    Don't have an account? <span onClick={() => setIsLogin(false)}>Sign up</span>
+                                </div>
+                            </form>
+                        ) : (
+                            <form className="auth-form" onSubmit={handleSignup}>
+                                <div className="form-group">
+                                    <label htmlFor="signup-name">Full Name</label>
+                                    <input type="text" id="signup-name" name="name" required />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="signup-email">Email Address</label>
+                                    <input type="email" id="signup-email" name="email" required />
+                                </div>
+                                
+                                <div className="form-group">
+                                    <label htmlFor="signup-password">Password</label>
+                                    <input type="password" id="signup-password" name="password" required />
+                                </div>
+                                
+                                <button type="submit" className="btn">Create Account</button>
+                                
+                                <div className="auth-toggle">
+                                    Already have an account? <span onClick={() => setIsLogin(true)}>Login</span>
+                                </div>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+        
+        // Footer Component
+        function Footer({ setCurrentView }) {
+            return (
+                <footer>
+                    <div className="container">
+                        <div className="footer-content">
+                            <div className="footer-section">
+                                <h3>Local Market</h3>
+                                <p>Your neighborhood store for fresh produce, artisanal goods, and everyday essentials. Supporting local farmers and makers since 2010.</p>
+                            </div>
+                            
+                            <div className="footer-section">
+                                <h3>Quick Links</h3>
+                                <ul className="footer-links">
+                                    <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>Home</a></li>
+                                    <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('products'); }}>Products</a></li>
+                                    <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('tracking'); }}>Track Order</a></li>
+                                    <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('support'); }}>Customer Support</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div className="footer-section">
+                                <h3>Contact Info</h3>
+                                <ul className="footer-links">
+                                    <li><i className="fas fa-map-marker-alt" style={{ marginRight: '10px' }}></i> 123 Main Street, Local Town</li>
+                                    <li><i className="fas fa-phone" style={{ marginRight: '10px' }}></i> (123) 456-7890</li>
+                                    <li><i className="fas fa-envelope" style={{ marginRight: '10px' }}></i> hello@localmarket.com</li>
+                                </ul>
+                            </div>
+                            
+                            <div className="footer-section">
+                                <h3>Follow Us</h3>
+                                <div style={{ display: 'flex', gap: '15px', marginTop: '15px' }}>
+                                    <a href="#" style={{ color: 'white', fontSize: '20px' }}><i className="fab fa-facebook"></i></a>
+                                    <a href="#" style={{ color: 'white', fontSize: '20px' }}><i className="fab fa-instagram"></i></a>
+                                    <a href="#" style={{ color: 'white', fontSize: '20px' }}><i className="fab fa-twitter"></i></a>
+                                </div>
+                                <p style={{ marginTop: '20px' }}>Subscribe to our newsletter for updates and special offers.</p>
+                                <div style={{ display: 'flex', marginTop: '10px' }}>
+                                    <input type="email" placeholder="Your email" style={{ flex: 1, padding: '10px', border: 'none', borderRadius: '3px 0 0 3px' }} />
+                                    <button className="btn" style={{ borderRadius: '0 3px 3px 0', padding: '10px 15px' }}>Subscribe</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="copyright">
+                            <p>&copy; 2023 Local Market. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+        
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
